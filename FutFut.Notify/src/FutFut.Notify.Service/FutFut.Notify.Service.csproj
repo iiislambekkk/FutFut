@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FutFut.Common" Version="1.0.4" />
+    <PackageReference Include="FutFut.Common" Version="1.0.5" />
     <PackageReference Include="MailKit" Version="4.12.1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5" />
     <PackageReference Include="NSwag.AspNetCore" Version="14.4.0" />

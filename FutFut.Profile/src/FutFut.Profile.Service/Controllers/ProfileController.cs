@@ -1,6 +1,7 @@
 using AutoMapper;
 using FutFut.Common;
 using FutFut.Profile.Service.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FutFut.Profile.Service.Controllers;
@@ -17,6 +18,7 @@ public class ProfileController(IRepository<ProfileEntity> repository, IMapper ma
     }
     
     [HttpGet("get/all")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<IEnumerable<ProfileEntity>>> GetAllAsync()
     {
         var result = await repository.GetAllAsync();
@@ -24,6 +26,7 @@ public class ProfileController(IRepository<ProfileEntity> repository, IMapper ma
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<ActionResult<ProfileDto>> CreateAsync(CreateProfileDto entity)
     {
         var profile = mapper.Map<ProfileEntity>(entity);
@@ -38,6 +41,7 @@ public class ProfileController(IRepository<ProfileEntity> repository, IMapper ma
     }
 
     [HttpPost("avatar")]
+    [Authorize]
     public async Task ChangeAvatarAsync()
     {
         throw new NotImplementedException();

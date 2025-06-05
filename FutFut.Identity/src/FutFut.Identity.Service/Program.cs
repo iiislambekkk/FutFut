@@ -49,10 +49,10 @@ builder.Services.AddIdentityServer(opt =>
     .AddAspNetIdentity<ApplicationUser>()
     .AddInMemoryApiScopes(identityServerSettings.ApiScopes)
     .AddInMemoryClients(identityServerSettings.Clients)
+    .AddInMemoryApiResources(identityServerSettings.ApiResources)
     .AddInMemoryIdentityResources(identityServerSettings.IdentityResources);
 
 builder.Services.AddLocalApiAuthentication();
-
 
 builder.Services.AddControllers();
 builder.Services.AddHostedService<IdentitySeedHostedService>();
@@ -75,13 +75,14 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseStaticFiles();
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 app.UseRouting();
 
 app.UseIdentityServer();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

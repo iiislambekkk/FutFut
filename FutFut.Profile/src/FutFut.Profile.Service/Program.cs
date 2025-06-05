@@ -1,13 +1,17 @@
 using FutFut.Common.EfCore;
+using FutFut.Common.Identity;
 using FutFut.Profile.Service.Data;
 using FutFut.Profile.Service.Entities;
 using FutFut.Profile.Service.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddEfCoreDbContext<AppDbContext>();
-builder.Services.AddEFCoreRepository<ProfileEntity, AppDbContext>();
-builder.Services.AddEFCoreRepository<PlayedHistory, AppDbContext>();
+builder.Services
+    .AddEfCoreDbContext<AppDbContext>()
+    .AddEFCoreRepository<ProfileEntity, AppDbContext>()
+    .AddEFCoreRepository<PlayedHistory, AppDbContext>()
+    .AddJwtBearerAuthentication();
+
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddControllers(opt =>
@@ -30,6 +34,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

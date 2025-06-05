@@ -1,10 +1,13 @@
+using FutFut.Common.Identity;
 using FutFut.Common.MassTransit;
 using FutFut.Notify.Service.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
-builder.Services.AddMassTransitWithRabbitMQ();
+builder.Services
+    .AddMassTransitWithRabbitMQ()
+    .AddJwtBearerAuthentication();
 
 builder.Services.AddControllers(opt =>
 {
