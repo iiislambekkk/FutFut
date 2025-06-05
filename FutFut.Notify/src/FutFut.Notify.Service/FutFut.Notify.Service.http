@@ -1,0 +1,6 @@
+@FutFut.Notify.Service_HostAddress = http://localhost:5287
+
+GET {{FutFut.Notify.Service_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

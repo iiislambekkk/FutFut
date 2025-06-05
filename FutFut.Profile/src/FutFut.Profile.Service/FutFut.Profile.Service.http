@@ -1,0 +1,6 @@
+@FutFut.Profile.Service_HostAddress = http://localhost:5057
+
+GET {{FutFut.Profile.Service_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
