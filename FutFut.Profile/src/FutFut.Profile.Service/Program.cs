@@ -1,3 +1,4 @@
+using FutFut.Common.AWS3;
 using FutFut.Common.EfCore;
 using FutFut.Common.Identity;
 using FutFut.Profile.Service.Data;
@@ -10,6 +11,7 @@ builder.Services
     .AddEfCoreDbContext<AppDbContext>()
     .AddEFCoreRepository<ProfileEntity, AppDbContext>()
     .AddEFCoreRepository<PlayedHistory, AppDbContext>()
+    .AddAWS3Storage()
     .AddJwtBearerAuthentication();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
