@@ -8,13 +8,16 @@
 
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="14.0.0" />
-        <PackageReference Include="FutFut.Common" Version="1.0.6" />
+        <PackageReference Include="FutFut.Common" Version="1.0.9.6" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.5">
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
           <PrivateAssets>all</PrivateAssets>
         </PackageReference>
         <PackageReference Include="NSwag.AspNetCore" Version="14.4.0" />
+        <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+        <PackageReference Include="Serilog.Formatting.Compact" Version="3.0.0" />
+        <PackageReference Include="Serilog.Sinks.Network" Version="3.0.0" />
     </ItemGroup>
 
 </Project>

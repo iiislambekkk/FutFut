@@ -54,12 +54,12 @@ public class ProfileController(IRepository<ProfileEntity> repository, IMapper ma
 
         if (!(userId.ToString() == currentUserId || User.IsInRole("Admin")))
         {
-            return Forbid();
+            return Forbid("Access denied");
         }
         
         var profile = await repository.GetAsync(u => u.Id == userId);
         
-        if (profile == null) return NotFound();
+        if (profile == null) return NotFound("Profile not found");
         
         if (file == null || file.Length == 0)
             throw new ArgumentException("Файл не предоставлен или пуст.");
@@ -79,7 +79,7 @@ public class ProfileController(IRepository<ProfileEntity> repository, IMapper ma
             contentType
         );
         
-        var avatarUrl = $"{_aws3Settings.Endpoint}/{_aws3Settings.Endpoint}/{fileName}";
+        var avatarUrl = $"{fileName}";
         
         profile.Avatar = avatarUrl;
         

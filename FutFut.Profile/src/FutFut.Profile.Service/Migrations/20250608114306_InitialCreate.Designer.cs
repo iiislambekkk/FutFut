@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FutFut.Profile.Service.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250605091058_InitialCreate")]
+    [Migration("20250608114306_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -83,6 +83,23 @@ namespace FutFut.Profile.Service.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Profiles");
+                });
+
+            modelBuilder.Entity("FutFut.Profile.Service.Entities.SystemWorks", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset?>("TimeOfWork")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SystemWorks");
                 });
 
             modelBuilder.Entity("FutFut.Profile.Service.Entities.DescriptionPhotos", b =>

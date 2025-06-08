@@ -1,4 +1,5 @@
 ﻿using Amazon;
+using Amazon.Runtime;
 using Amazon.S3;
 using FutFut.Common.Settings;
 using Microsoft.Extensions.Configuration;
@@ -17,12 +18,16 @@ public static class Extension
             {
                 var s3Config = new AmazonS3Config()
                 {
-                    RegionEndpoint = RegionEndpoint.GetBySystemName(awsSettings.Region),
+                    RegionEndpoint = RegionEndpoint.USEast1,
                     ForcePathStyle = awsSettings.UseR2,
-                    ServiceURL = awsSettings.UseR2 ? awsSettings.Endpoint : null
+                    ServiceURL = awsSettings.UseR2 ? awsSettings.Endpoint : null,
+                    RequestChecksumCalculation = RequestChecksumCalculation.WHEN_REQUIRED,
+                    ResponseChecksumValidation = ResponseChecksumValidation.WHEN_REQUIRED
                 };
+                
+                var credentials = new BasicAWSCredentials(awsSettings.AccessKey, awsSettings.SecretKey);
 
-                return new AmazonS3Client(awsSettings.AccessKey, awsSettings.SecretKey, s3Config);
+                return new AmazonS3Client(credentials,  s3Config);
             }
         );
 

@@ -82,6 +82,23 @@ namespace FutFut.Profile.Service.Migrations
                     b.ToTable("Profiles");
                 });
 
+            modelBuilder.Entity("FutFut.Profile.Service.Entities.SystemWorks", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset?>("TimeOfWork")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SystemWorks");
+                });
+
             modelBuilder.Entity("FutFut.Profile.Service.Entities.DescriptionPhotos", b =>
                 {
                     b.HasOne("FutFut.Profile.Service.Entities.ProfileEntity", null)

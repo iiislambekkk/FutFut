@@ -11,15 +11,17 @@ public class S3StorageService(IAmazonS3 s3Client, IConfiguration configuration) 
 
     public async Task UploadAsync(Stream fileStream, string key, string contentType)
     {
+        Console.WriteLine(_bucket);
+        
         var request = new PutObjectRequest()
         {
             BucketName = _bucket,
             Key = key,
             InputStream = fileStream,
-            ContentType = contentType,
-            CannedACL = S3CannedACL.PublicRead
+            DisablePayloadSigning = true, 
         };
         
-        await s3Client.PutObjectAsync(request);
+        var response = await s3Client.PutObjectAsync(request);
+        Console.WriteLine(response.ETag);
     }
 }

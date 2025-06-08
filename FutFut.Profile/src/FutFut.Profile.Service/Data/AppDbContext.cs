@@ -7,4 +7,5 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 {
     public DbSet<ProfileEntity> Profiles { get; set; }
     public DbSet<PlayedHistory> PlayedHistory { get; set; }
+    public DbSet<SystemWorks>  SystemWorks { get; set; }
 }

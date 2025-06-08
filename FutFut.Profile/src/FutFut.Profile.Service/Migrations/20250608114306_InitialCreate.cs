@@ -39,6 +39,19 @@ namespace FutFut.Profile.Service.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SystemWorks",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    TimeOfWork = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SystemWorks", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DescriptionPhotos",
                 columns: table => new
                 {
@@ -70,6 +83,9 @@ namespace FutFut.Profile.Service.Migrations
 
             migrationBuilder.DropTable(
                 name: "PlayedHistory");
+
+            migrationBuilder.DropTable(
+                name: "SystemWorks");
 
             migrationBuilder.DropTable(
                 name: "Profiles");
