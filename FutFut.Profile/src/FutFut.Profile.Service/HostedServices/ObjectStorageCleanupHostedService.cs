@@ -1,30 +1,65 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
-using FutFut.Common.AWS3;
 using FutFut.Profile.Service.Data;
+using FutFut.Profile.Service.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace FutFut.Profile.Service.HostedServices;
 
-public class ObjectStorageCleanupHostedService(IServiceProvider _serviceProvider) : IHostedService
+public class ObjectStorageCleanupHostedService(IServiceProvider _serviceProvider, ILogger<ObjectStorageCleanupHostedService> logger, IAmazonS3 objectStorage) : BackgroundService
 {
-    public async Task StartAsync(CancellationToken cancellationToken)
+    protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
-        using IServiceScope scope = _serviceProvider.CreateScope();
-        AppDbContext dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        
-        ILogger<ObjectStorageCleanupHostedService> logger = scope.ServiceProvider.GetRequiredService<ILogger<ObjectStorageCleanupHostedService>>();
-        IAmazonS3 objectStorage = scope.ServiceProvider.GetRequiredService<IAmazonS3>();
+        while (!cancellationToken.IsCancellationRequested)
+        {
+            try
+            {
+                using IServiceScope scope = _serviceProvider.CreateScope();
+                AppDbContext dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
+                if (await IsNeedToDoJob(dbContext))
+                {
+                    await DoCleanUpJob(dbContext, cancellationToken);
+                    logger.LogInformation("Job:{job} is completed successfully.", "cleanup");
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            await Task.Delay(TimeSpan.FromDays(1));
+        }
+
+    }
+
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        return Task.CompletedTask;
+    }
+
+    public async Task<bool> IsNeedToDoJob(AppDbContext dbContext)
+    {
+        var lastWorkingTime =
+            await dbContext.SystemWorks.FirstOrDefaultAsync(w => w.Name == SystemWorksEnum.ObjectStorageCleanUp.ToString());
+
+        if (lastWorkingTime == null) return true;
+
+        if ((DateTimeOffset.UtcNow - lastWorkingTime.TimeOfWork) - TimeSpan.FromDays(7) > TimeSpan.FromSeconds(1))
+        {
+            return true;
+        }
+        
+        return false;
+    }
+
+    public async Task DoCleanUpJob(AppDbContext dbContext, CancellationToken cancellationToken)
+    {
         var objectsPathsInDb = new List<string>();
         objectsPathsInDb.AddRange(dbContext.Profiles.Select(p => p.Avatar).ToList());
 
-        foreach (var path in objectsPathsInDb)
-        {
-            logger.LogInformation("Job:{job}. Deleting {path}", "cleanup", path);
-        }
-
         string? continuationToken = null;
-        bool isTruncated = false;
+        bool isObjectListTruncated = false;
         List<string> objectsPathsInObjectStorage = new List<string>();
 
         do
@@ -32,29 +67,22 @@ public class ObjectStorageCleanupHostedService(IServiceProvider _serviceProvider
             var response = await objectStorage.ListObjectsV2Async(new ListObjectsV2Request()
             {
                 BucketName = "documents",
-                ContinuationToken = continuationToken
+                ContinuationToken = continuationToken,
+                Prefix = "profile"
             }, cancellationToken);
             
             continuationToken = response.NextContinuationToken;
-            isTruncated = response.IsTruncated ?? false;
+            isObjectListTruncated = response.IsTruncated ?? false;
 
-            if (response.S3Objects != null && response.S3Objects .Count > 0)
+            if (response.S3Objects is { Count: > 0 })
             {
                 objectsPathsInObjectStorage.AddRange(response.S3Objects.Select(o => o.Key).ToList());
             }
         }
-        while(isTruncated);
-        
-        foreach (var path in objectsPathsInObjectStorage)
-        {
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            logger.LogInformation("Job:{job}. Deleting {path}", "cleanup", path);
-            Console.ResetColor();
-        }
+        while(isObjectListTruncated);
         
         var listOfObjectsToDelete = new List<KeyVersion>();
         
-          
         foreach (var path in objectsPathsInObjectStorage)
         {
             if (!objectsPathsInDb.Contains(path))
@@ -68,6 +96,11 @@ public class ObjectStorageCleanupHostedService(IServiceProvider _serviceProvider
         for (int i = 0; i < listOfObjectsToDelete.Count; i += batchSize)
         {
             var batch = listOfObjectsToDelete.Skip(i).Take(batchSize).ToList();
+
+            foreach (var objectPath in batch)
+            {
+                logger.LogInformation("Deleting {path} in object storage cause there is no references to this path in the database.", objectPath);
+            }
             
             var deleteResponse = await objectStorage.DeleteObjectsAsync(new DeleteObjectsRequest()
             {
@@ -83,13 +116,6 @@ public class ObjectStorageCleanupHostedService(IServiceProvider _serviceProvider
               Console.ResetColor();
             }
         }
-        
-        
-        logger.LogInformation("Job:{job} is completed successfully.", "cleanup");
-    }
-
-    public Task StopAsync(CancellationToken cancellationToken)
-    {
-        return Task.CompletedTask;
+                
     }
 }

@@ -1,26 +1,33 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\merla\\Desktop\\FutFut\\FutFut.Identity\\src\\FutFut.Identity.Contracts\\FutFut.Identity.Contracts.csproj": {}
+    "C:\\Users\\Sulpak\\Desktop\\FutFut\\FutFut.Identity\\src\\FutFut.Identity.Contracts\\FutFut.Identity.Contracts.csproj": {}
   },
   "projects": {
-    "C:\\Users\\merla\\Desktop\\FutFut\\FutFut.Identity\\src\\FutFut.Identity.Contracts\\FutFut.Identity.Contracts.csproj": {
+    "C:\\Users\\Sulpak\\Desktop\\FutFut\\FutFut.Identity\\src\\FutFut.Identity.Contracts\\FutFut.Identity.Contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\merla\\Desktop\\FutFut\\FutFut.Identity\\src\\FutFut.Identity.Contracts\\FutFut.Identity.Contracts.csproj",
+        "projectUniqueName": "C:\\Users\\Sulpak\\Desktop\\FutFut\\FutFut.Identity\\src\\FutFut.Identity.Contracts\\FutFut.Identity.Contracts.csproj",
         "projectName": "FutFut.Identity.Contracts",
-        "projectPath": "C:\\Users\\merla\\Desktop\\FutFut\\FutFut.Identity\\src\\FutFut.Identity.Contracts\\FutFut.Identity.Contracts.csproj",
-        "packagesPath": "C:\\Users\\merla\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\merla\\Desktop\\FutFut\\FutFut.Identity\\src\\FutFut.Identity.Contracts\\obj\\",
+        "projectPath": "C:\\Users\\Sulpak\\Desktop\\FutFut\\FutFut.Identity\\src\\FutFut.Identity.Contracts\\FutFut.Identity.Contracts.csproj",
+        "packagesPath": "C:\\Users\\Sulpak\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Sulpak\\Desktop\\FutFut\\FutFut.Identity\\src\\FutFut.Identity.Contracts\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\merla\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Sulpak\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Users\\merla\\Desktop\\FutFut\\packages": {},
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\Sulpak\\Desktop\\C# learning\\packages": {},
+          "C:\\Users\\Sulpak\\Desktop\\FutFut": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -39,7 +46,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net9.0": {
@@ -60,7 +67,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
