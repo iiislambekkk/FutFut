@@ -1,0 +1,12 @@
+C:\Users\Sulpak\Desktop\FutFut\FutFut.Identity\src\FutFut.Identity.Contracts\bin\Debug\net9.0\FutFut.Identity.Contracts.deps.json
+C:\Users\Sulpak\Desktop\FutFut\FutFut.Identity\src\FutFut.Identity.Contracts\bin\Debug\net9.0\FutFut.Identity.Contracts.dll
+C:\Users\Sulpak\Desktop\FutFut\FutFut.Identity\src\FutFut.Identity.Contracts\bin\Debug\net9.0\FutFut.Identity.Contracts.pdb
+C:\Users\Sulpak\Desktop\FutFut\FutFut.Identity\src\FutFut.Identity.Contracts\obj\Debug\net9.0\FutFut.Identity.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Sulpak\Desktop\FutFut\FutFut.Identity\src\FutFut.Identity.Contracts\obj\Debug\net9.0\FutFut.Identity.Contracts.AssemblyInfoInputs.cache
+C:\Users\Sulpak\Desktop\FutFut\FutFut.Identity\src\FutFut.Identity.Contracts\obj\Debug\net9.0\FutFut.Identity.Contracts.AssemblyInfo.cs
+C:\Users\Sulpak\Desktop\FutFut\FutFut.Identity\src\FutFut.Identity.Contracts\obj\Debug\net9.0\FutFut.Identity.Contracts.csproj.CoreCompileInputs.cache
+C:\Users\Sulpak\Desktop\FutFut\FutFut.Identity\src\FutFut.Identity.Contracts\obj\Debug\net9.0\FutFut.Identity.Contracts.sourcelink.json
+C:\Users\Sulpak\Desktop\FutFut\FutFut.Identity\src\FutFut.Identity.Contracts\obj\Debug\net9.0\FutFut.Identity.Contracts.dll
+C:\Users\Sulpak\Desktop\FutFut\FutFut.Identity\src\FutFut.Identity.Contracts\obj\Debug\net9.0\refint\FutFut.Identity.Contracts.dll
+C:\Users\Sulpak\Desktop\FutFut\FutFut.Identity\src\FutFut.Identity.Contracts\obj\Debug\net9.0\FutFut.Identity.Contracts.pdb
+C:\Users\Sulpak\Desktop\FutFut\FutFut.Identity\src\FutFut.Identity.Contracts\obj\Debug\net9.0\ref\FutFut.Identity.Contracts.dll

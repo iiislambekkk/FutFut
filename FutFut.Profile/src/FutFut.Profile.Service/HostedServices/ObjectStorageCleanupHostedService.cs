@@ -6,7 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FutFut.Profile.Service.HostedServices;
 
-public class ObjectStorageCleanupHostedService(IServiceProvider _serviceProvider, ILogger<ObjectStorageCleanupHostedService> logger, IAmazonS3 objectStorage) : BackgroundService
+public class ObjectStorageCleanupHostedService(
+        IServiceProvider serviceProvider,
+        ILogger<ObjectStorageCleanupHostedService> logger,
+        IAmazonS3 objectStorage
+    ) : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
@@ -14,7 +18,7 @@ public class ObjectStorageCleanupHostedService(IServiceProvider _serviceProvider
         {
             try
             {
-                using IServiceScope scope = _serviceProvider.CreateScope();
+                using IServiceScope scope = serviceProvider.CreateScope();
                 AppDbContext dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
                 if (await IsNeedToDoJob(dbContext))
@@ -25,17 +29,12 @@ public class ObjectStorageCleanupHostedService(IServiceProvider _serviceProvider
             }
             catch (Exception ex)
             {
-
+                logger.LogCritical("Something went wrong while starting job:{job}.", "cleanup");
             }
 
             await Task.Delay(TimeSpan.FromDays(1));
         }
 
-    }
-
-    public Task StopAsync(CancellationToken cancellationToken)
-    {
-        return Task.CompletedTask;
     }
 
     public async Task<bool> IsNeedToDoJob(AppDbContext dbContext)
@@ -59,7 +58,7 @@ public class ObjectStorageCleanupHostedService(IServiceProvider _serviceProvider
         objectsPathsInDb.AddRange(dbContext.Profiles.Select(p => p.Avatar).ToList());
 
         string? continuationToken = null;
-        bool isObjectListTruncated = false;
+        bool isObjectListTruncated;
         List<string> objectsPathsInObjectStorage = new List<string>();
 
         do
@@ -111,9 +110,7 @@ public class ObjectStorageCleanupHostedService(IServiceProvider _serviceProvider
                
             foreach (var error in deleteResponse.DeleteErrors.ToList())
             {
-              Console.ForegroundColor = ConsoleColor.Red;
-              Console.WriteLine($"Error deleting {error.Message}");
-              Console.ResetColor();
+                logger.LogError("Error while deleting object with key: {key}, message: {error}", error.Key, error.Message);
             }
         }
                 

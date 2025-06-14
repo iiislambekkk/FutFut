@@ -2,6 +2,7 @@ using FutFut.Common.AWS3;
 using FutFut.Common.EfCore;
 using FutFut.Common.Identity;
 using FutFut.Common.Logging;
+using FutFut.Common.MassTransit;
 using FutFut.Profile.Service.Data;
 using FutFut.Profile.Service.Entities;
 using FutFut.Profile.Service.HostedServices;
@@ -12,15 +13,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddEfCoreDbContext<AppDbContext>()
     .AddEFCoreRepository<ProfileEntity, AppDbContext>()
-    .AddEFCoreRepository<PlayedHistory, AppDbContext>()
     .AddEFCoreRepository<SystemWorks, AppDbContext>()
+    .AddEFCoreRepository<PlayedHistoryEntity, AppDbContext>()
+    .AddEFCoreRepository<AboutPhotoEntity, AppDbContext>()
+    .AddEFCoreRepository<FriendShipEntity, AppDbContext>()
+    .AddMassTransitWithRabbitMQ()
     .AddAWS3Storage()
     .AddJwtBearerAuthentication();
 
 builder.Services.AddHostedService<ObjectStorageCleanupHostedService>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-builder.AddLoggingWithSeqAndLogstash();
 
 builder.Services.AddControllers(opt =>
 {
@@ -28,6 +31,7 @@ builder.Services.AddControllers(opt =>
 });
 
 builder.Services.AddOpenApi();
+builder.AddLoggingWithSeqAndLogstash();
 
 var app = builder.Build();
 
@@ -40,7 +44,13 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseCors(opt =>
+{
+    opt.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+});
+
 app.UseHttpsRedirection();
+
 
 app.UseAuthentication();
 app.UseAuthorization();

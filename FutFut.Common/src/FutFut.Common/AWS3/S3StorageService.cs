@@ -1,4 +1,5 @@
-﻿using Amazon.S3;
+﻿using System.Net;
+using Amazon.S3;
 using Amazon.S3.Model;
 using FutFut.Common.Settings;
 using Microsoft.Extensions.Configuration;
@@ -11,8 +12,6 @@ public class S3StorageService(IAmazonS3 s3Client, IConfiguration configuration) 
 
     public async Task UploadAsync(Stream fileStream, string key, string contentType)
     {
-        Console.WriteLine(_bucket);
-        
         var request = new PutObjectRequest()
         {
             BucketName = _bucket,
@@ -23,5 +22,18 @@ public class S3StorageService(IAmazonS3 s3Client, IConfiguration configuration) 
         
         var response = await s3Client.PutObjectAsync(request);
         Console.WriteLine(response.ETag);
+    }
+
+    public async Task<bool> DeleteAsync(string key)
+    {
+        var request = new DeleteObjectRequest()
+        {
+            BucketName = _bucket,
+            Key = key
+        };
+
+        var response = await s3Client.DeleteObjectAsync(request);
+
+        return response.HttpStatusCode == HttpStatusCode.NoContent;
     }
 }

@@ -3,4 +3,5 @@
 public interface IS3StorageService
 {
     Task UploadAsync(Stream fileStream, string key, string contentType);
+    Task<bool> DeleteAsync(string key);
 }
