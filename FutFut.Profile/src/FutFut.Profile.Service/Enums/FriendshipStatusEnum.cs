@@ -6,5 +6,6 @@ public enum FriendshipStatusEnum
 {
     Pending,
     Accepted,
-    Rejected
+    Rejected,
+    Cancelled
 }

@@ -1,6 +1,7 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
 using FutFut.Profile.Service.Data;
+using FutFut.Profile.Service.Entities;
 using FutFut.Profile.Service.Enums;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,15 +27,14 @@ public class ObjectStorageCleanupHostedService(
                     await DoCleanUpJob(dbContext, cancellationToken);
                     logger.LogInformation("Job:{job} is completed successfully.", "cleanup");
                 }
+                
+                await Task.Delay(TimeSpan.FromDays(1), cancellationToken);
             }
             catch (Exception ex)
             {
                 logger.LogCritical("Something went wrong while starting job:{job}.", "cleanup");
             }
-
-            await Task.Delay(TimeSpan.FromDays(1));
         }
-
     }
 
     public async Task<bool> IsNeedToDoJob(AppDbContext dbContext)
@@ -56,7 +56,8 @@ public class ObjectStorageCleanupHostedService(
     {
         var objectsPathsInDb = new List<string>();
         objectsPathsInDb.AddRange(dbContext.Profiles.Select(p => p.Avatar).ToList());
-
+        objectsPathsInDb.AddRange(dbContext.AboutPhotos.Select(p => p.Path).ToList());
+        
         string? continuationToken = null;
         bool isObjectListTruncated;
         List<string> objectsPathsInObjectStorage = new List<string>();
@@ -113,6 +114,24 @@ public class ObjectStorageCleanupHostedService(
                 logger.LogError("Error while deleting object with key: {key}, message: {error}", error.Key, error.Message);
             }
         }
-                
+
+        var job = await dbContext.SystemWorks.FirstOrDefaultAsync(w =>
+            w.Name == SystemWorksEnum.ObjectStorageCleanUp.ToString());
+        
+        if (job is null)
+        {
+            var newJobEntity = new SystemWorks()
+            {
+                Name = SystemWorksEnum.ObjectStorageCleanUp.ToString(),
+                TimeOfWork = DateTimeOffset.UtcNow
+            };
+            
+            await dbContext.SystemWorks.AddAsync(newJobEntity);
+        }
+        else
+        {
+            job.TimeOfWork = DateTimeOffset.UtcNow;
+            dbContext.SystemWorks.Update(job);
+        }
     }
 }

@@ -14,7 +14,7 @@ public class MappingProfile : AutoMapper.Profile
         CreateMap<UpdateProfileDto, ProfileEntity>()
             .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 
-        CreateMap<FriendShipRequestDto, FriendShipEntity>();
+        CreateMap<FriendShipRequestDto, FriendShipRequestEntity>();
 
         CreateMap<PlayedHistoryEntity, PlayedHistoryDto>();
         CreateMap<PlayedHistoryDto, PlayedHistoryEntity>();

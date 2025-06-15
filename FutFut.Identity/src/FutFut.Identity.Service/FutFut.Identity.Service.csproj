@@ -23,4 +23,8 @@
         <PackageReference Include="NSwag.AspNetCore" Version="14.4.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\FutFut.Identity.Contracts\FutFut.Identity.Contracts.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -17,6 +17,7 @@ builder.Services
     .AddEFCoreRepository<PlayedHistoryEntity, AppDbContext>()
     .AddEFCoreRepository<AboutPhotoEntity, AppDbContext>()
     .AddEFCoreRepository<FriendShipEntity, AppDbContext>()
+    .AddEFCoreRepository<FriendShipRequestEntity, AppDbContext>()
     .AddMassTransitWithRabbitMQ()
     .AddAWS3Storage()
     .AddJwtBearerAuthentication();

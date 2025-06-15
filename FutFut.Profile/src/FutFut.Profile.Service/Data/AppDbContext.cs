@@ -9,13 +9,22 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<PlayedHistoryEntity> PlayedHistory { get; set; }
     public DbSet<AboutPhotoEntity> AboutPhotos { get; set; }
     public DbSet<SystemWorks>  SystemWorks { get; set; }
-    public DbSet<FriendShipEntity>  FriendShipEntities { get; set; }
+    public DbSet<FriendShipRequestEntity>  FriendShipRequests { get; set; }
+    public DbSet<FriendShipEntity>  FriendShips { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<FriendShipEntity>()
-            .HasIndex(f => new { f.RequestedUserId, f.RespondedUserId })
-            .IsUnique();
+        modelBuilder.Entity<FriendShipRequestEntity>()
+            .HasOne(f => f.FromProfile)
+            .WithMany(p => p.SentFriendShipRequests)
+            .HasForeignKey(f => f.FromUserId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<FriendShipRequestEntity>()
+            .HasOne(f => f.ToProfile)
+            .WithMany(p => p.ReceivedFriendShipRequests)
+            .HasForeignKey(f => f.ToUserId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<AboutPhotoEntity>()
             .HasOne<ProfileEntity>()
@@ -23,23 +32,28 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             .HasForeignKey(ph => ph.ProfileId)
             .OnDelete(DeleteBehavior.Cascade);
         
-        modelBuilder.Entity<FriendShipEntity>()
-            .HasOne<ProfileEntity>()
-            .WithMany()
-            .HasForeignKey(ph => ph.RequestedUserId)
-            .OnDelete(DeleteBehavior.Cascade);
-        
-        modelBuilder.Entity<FriendShipEntity>()
-            .HasOne<ProfileEntity>()
-            .WithMany()
-            .HasForeignKey(ph => ph.RespondedUserId)
-            .OnDelete(DeleteBehavior.Cascade);
-        
         modelBuilder.Entity<PlayedHistoryEntity>()
             .HasOne<ProfileEntity>()
             .WithMany()
             .HasForeignKey(ph => ph.ProfileId)
             .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<FriendShipEntity>(builder =>
+        {
+            builder.HasKey(f => f.Id);
+
+            builder
+                .HasOne(f => f.FriendA)
+                .WithMany()
+                .HasForeignKey(f => f.FriendAId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .HasOne(f => f.FriendB)
+                .WithMany() 
+                .HasForeignKey(f => f.FriendBId)
+                .OnDelete(DeleteBehavior.Restrict); 
+        });
 
         base.OnModelCreating(modelBuilder);
     }

@@ -1,6 +1,7 @@
 using System.Reflection;
 using FutFut.Common.EfCore;
 using FutFut.Common.Identity;
+using FutFut.Common.Logging;
 using FutFut.Common.MassTransit;
 using FutFut.Notify.Service.Data;
 using FutFut.Notify.Service.Data.Entities;
@@ -15,9 +16,12 @@ builder.Services
     .AddEfCoreDbContext<AppDbContext>()
     .AddEFCoreRepository<NotificationEntity, AppDbContext>()
     .AddEFCoreRepository<DeviceEntity, AppDbContext>()
+    .AddEFCoreRepository<UserEntity, AppDbContext>()
     .AddMassTransitWithRabbitMQ()
     .AddFirebaseMessaging(builder.Configuration)
     .AddJwtBearerAuthentication();
+
+builder.AddLoggingWithSeqAndLogstash();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 

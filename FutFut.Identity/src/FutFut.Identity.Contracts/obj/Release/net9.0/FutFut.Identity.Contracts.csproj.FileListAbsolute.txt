@@ -1,0 +1,12 @@
+C:\Users\merla\Desktop\FutFut\FutFut.Identity\src\FutFut.Identity.Contracts\bin\Release\net9.0\FutFut.Identity.Contracts.deps.json
+C:\Users\merla\Desktop\FutFut\FutFut.Identity\src\FutFut.Identity.Contracts\bin\Release\net9.0\FutFut.Identity.Contracts.dll
+C:\Users\merla\Desktop\FutFut\FutFut.Identity\src\FutFut.Identity.Contracts\bin\Release\net9.0\FutFut.Identity.Contracts.pdb
+C:\Users\merla\Desktop\FutFut\FutFut.Identity\src\FutFut.Identity.Contracts\obj\Release\net9.0\FutFut.Identity.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\merla\Desktop\FutFut\FutFut.Identity\src\FutFut.Identity.Contracts\obj\Release\net9.0\FutFut.Identity.Contracts.AssemblyInfoInputs.cache
+C:\Users\merla\Desktop\FutFut\FutFut.Identity\src\FutFut.Identity.Contracts\obj\Release\net9.0\FutFut.Identity.Contracts.AssemblyInfo.cs
+C:\Users\merla\Desktop\FutFut\FutFut.Identity\src\FutFut.Identity.Contracts\obj\Release\net9.0\FutFut.Identity.Contracts.csproj.CoreCompileInputs.cache
+C:\Users\merla\Desktop\FutFut\FutFut.Identity\src\FutFut.Identity.Contracts\obj\Release\net9.0\FutFut.Identity.Contracts.sourcelink.json
+C:\Users\merla\Desktop\FutFut\FutFut.Identity\src\FutFut.Identity.Contracts\obj\Release\net9.0\FutFut.Identity.Contracts.dll
+C:\Users\merla\Desktop\FutFut\FutFut.Identity\src\FutFut.Identity.Contracts\obj\Release\net9.0\refint\FutFut.Identity.Contracts.dll
+C:\Users\merla\Desktop\FutFut\FutFut.Identity\src\FutFut.Identity.Contracts\obj\Release\net9.0\FutFut.Identity.Contracts.pdb
+C:\Users\merla\Desktop\FutFut\FutFut.Identity\src\FutFut.Identity.Contracts\obj\Release\net9.0\ref\FutFut.Identity.Contracts.dll

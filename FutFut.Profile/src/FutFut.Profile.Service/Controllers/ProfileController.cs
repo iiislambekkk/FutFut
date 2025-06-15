@@ -5,6 +5,7 @@ using FutFut.Common;
 using FutFut.Common.AWS3;
 using FutFut.Profile.Service.Dtos;
 using FutFut.Profile.Service.Entities;
+using MassTransit.Initializers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -37,8 +38,11 @@ public class ProfileController(
             if (profileEntity.ShowFriends)
             {
                 var friendShipsEntities =
-                    await friendShipRepository.GetAllAsync(u => u.RequestedUserId == id || u.RespondedUserId == id);
-                profileEntity.FriendShips = friendShipsEntities.ToList();
+                    await friendShipRepository.GetAllAsync(u => u.FriendAId == id || u.FriendBId == id);
+                var friendsIds = friendShipsEntities.Select(f => f.FriendAId == id ? f.FriendBId : f.FriendAId).ToList();
+                var friendsEntities = (await profileRepository.GetAllAsync(p => friendsIds.Contains(p.Id))).Select(p => new ProfileEntity() {Id = p.Id, DisplayName = p.DisplayName});
+
+                profileEntity.Friends = friendsEntities.ToList();
             }
         }
         
@@ -63,8 +67,16 @@ public class ProfileController(
         profileEntity.AboutPhotos = aboutPhotos.ToList();
         
         var friendShipsEntities =
-            await friendShipRepository.GetAllAsync(u => u.RequestedUserId == id || u.RespondedUserId == id);
-        profileEntity.FriendShips = friendShipsEntities.ToList();
+            await friendShipRepository.GetAllAsync(u => u.FriendAId == id || u.FriendBId == id);
+        var friendsIds = friendShipsEntities.Select(f => f.FriendAId == id ? f.FriendBId : f.FriendAId).ToList();
+        var friendsEntities = (await profileRepository.GetAllAsync(p => friendsIds.Contains(p.Id))).Select(p => new ProfileEntity() {Id = p.Id, DisplayName = p.DisplayName});
+
+        profileEntity.Friends = friendsEntities.ToList();
+        
+        foreach (var profileEntityFriend in profileEntity.Friends)
+        {
+            Console.WriteLine(profileEntityFriend);
+        }
         
         var profileDto = mapper.Map<ProfileDto>(profileEntity);
         

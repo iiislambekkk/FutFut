@@ -32,6 +32,9 @@ namespace FutFut.Notify.Service.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("NotificationEntityId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Token")
                         .IsRequired()
                         .HasColumnType("text");
@@ -40,6 +43,10 @@ namespace FutFut.Notify.Service.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("NotificationEntityId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Devices");
                 });
@@ -76,7 +83,66 @@ namespace FutFut.Notify.Service.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("FutFut.Notify.Service.Data.Entities.UserEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Profiles");
+                });
+
+            modelBuilder.Entity("FutFut.Notify.Service.Data.Entities.DeviceEntity", b =>
+                {
+                    b.HasOne("FutFut.Notify.Service.Data.Entities.NotificationEntity", null)
+                        .WithMany("Devices")
+                        .HasForeignKey("NotificationEntityId");
+
+                    b.HasOne("FutFut.Notify.Service.Data.Entities.UserEntity", "User")
+                        .WithMany("Devices")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("FutFut.Notify.Service.Data.Entities.NotificationEntity", b =>
+                {
+                    b.HasOne("FutFut.Notify.Service.Data.Entities.UserEntity", "User")
+                        .WithMany("Notifications")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("FutFut.Notify.Service.Data.Entities.NotificationEntity", b =>
+                {
+                    b.Navigation("Devices");
+                });
+
+            modelBuilder.Entity("FutFut.Notify.Service.Data.Entities.UserEntity", b =>
+                {
+                    b.Navigation("Devices");
+
+                    b.Navigation("Notifications");
                 });
 #pragma warning restore 612, 618
         }

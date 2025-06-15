@@ -37,8 +37,18 @@ public class PushNotificationsController(
     }
     
     [HttpPost("register")]
+    [Authorize]
     public async Task<ActionResult> RegisterDevice(RegisterDeviceDto req)
     {
+        if (!Guid.TryParse(User.FindFirstValue(JwtRegisteredClaimNames.Sub), out var currentUserId))
+        {
+            return Forbid();
+        }
+        if (!(User.IsInRole("Admin") || currentUserId == req.UserId))
+        {
+            return Forbid();
+        }
+        
         var newDeviceEntity = mapper.Map<DeviceEntity>(req);
 
         var userAgentString = HttpContext.Request.Headers["User-Agent"].ToString();

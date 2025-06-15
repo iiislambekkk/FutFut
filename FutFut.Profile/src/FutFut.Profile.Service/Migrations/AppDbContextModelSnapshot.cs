@@ -53,13 +53,31 @@ namespace FutFut.Profile.Service.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("ProfileEntityId")
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("FriendAId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("RequestedUserId")
+                    b.Property<Guid>("FriendBId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("RespondedUserId")
+                    b.HasKey("Id");
+
+                    b.HasIndex("FriendAId");
+
+                    b.HasIndex("FriendBId");
+
+                    b.ToTable("FriendShips");
+                });
+
+            modelBuilder.Entity("FutFut.Profile.Service.Entities.FriendShipRequestEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("FromUserId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTimeOffset>("StartedAt")
@@ -68,16 +86,16 @@ namespace FutFut.Profile.Service.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
+                    b.Property<Guid>("ToUserId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ProfileEntityId");
+                    b.HasIndex("FromUserId");
 
-                    b.HasIndex("RespondedUserId");
+                    b.HasIndex("ToUserId");
 
-                    b.HasIndex("RequestedUserId", "RespondedUserId")
-                        .IsUnique();
-
-                    b.ToTable("FriendShipEntities");
+                    b.ToTable("FriendShipRequests");
                 });
 
             modelBuilder.Entity("FutFut.Profile.Service.Entities.PlayedHistoryEntity", b =>
@@ -132,6 +150,10 @@ namespace FutFut.Profile.Service.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<bool>("IsPrivate")
                         .HasColumnType("boolean");
 
@@ -181,21 +203,40 @@ namespace FutFut.Profile.Service.Migrations
 
             modelBuilder.Entity("FutFut.Profile.Service.Entities.FriendShipEntity", b =>
                 {
-                    b.HasOne("FutFut.Profile.Service.Entities.ProfileEntity", null)
-                        .WithMany("FriendShips")
-                        .HasForeignKey("ProfileEntityId");
-
-                    b.HasOne("FutFut.Profile.Service.Entities.ProfileEntity", null)
+                    b.HasOne("FutFut.Profile.Service.Entities.ProfileEntity", "FriendA")
                         .WithMany()
-                        .HasForeignKey("RequestedUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("FriendAId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("FutFut.Profile.Service.Entities.ProfileEntity", null)
+                    b.HasOne("FutFut.Profile.Service.Entities.ProfileEntity", "FriendB")
                         .WithMany()
-                        .HasForeignKey("RespondedUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("FriendBId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("FriendA");
+
+                    b.Navigation("FriendB");
+                });
+
+            modelBuilder.Entity("FutFut.Profile.Service.Entities.FriendShipRequestEntity", b =>
+                {
+                    b.HasOne("FutFut.Profile.Service.Entities.ProfileEntity", "FromProfile")
+                        .WithMany("SentFriendShipRequests")
+                        .HasForeignKey("FromUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("FutFut.Profile.Service.Entities.ProfileEntity", "ToProfile")
+                        .WithMany("ReceivedFriendShipRequests")
+                        .HasForeignKey("ToUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("FromProfile");
+
+                    b.Navigation("ToProfile");
                 });
 
             modelBuilder.Entity("FutFut.Profile.Service.Entities.PlayedHistoryEntity", b =>
@@ -215,9 +256,11 @@ namespace FutFut.Profile.Service.Migrations
                 {
                     b.Navigation("AboutPhotos");
 
-                    b.Navigation("FriendShips");
-
                     b.Navigation("PlayedHistory");
+
+                    b.Navigation("ReceivedFriendShipRequests");
+
+                    b.Navigation("SentFriendShipRequests");
                 });
 #pragma warning restore 612, 618
         }

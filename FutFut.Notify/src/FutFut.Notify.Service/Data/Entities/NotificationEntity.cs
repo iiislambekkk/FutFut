@@ -9,6 +9,8 @@ public class NotificationEntity : IEntity
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
+    public UserEntity? User { get; set; }
+    
     public NotificationType Type { get; set; }
     
     public string Payload { get; set; } = String.Empty;
@@ -18,4 +20,5 @@ public class NotificationEntity : IEntity
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
 
     public bool IsRead { get; set; } = false;
-}
+    
+    public List<DeviceEntity> Devices { get; set; } =  new (); }

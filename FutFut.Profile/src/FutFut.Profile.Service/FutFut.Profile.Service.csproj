@@ -9,6 +9,7 @@
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="14.0.0" />
         <PackageReference Include="FutFut.Common" Version="1.0.12" />
+        <PackageReference Include="FutFut.Identity.Contracts" Version="1.0.0" />
         <PackageReference Include="FutFut.Notify.Contracts" Version="1.0.2" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.5">
@@ -16,6 +17,10 @@
           <PrivateAssets>all</PrivateAssets>
         </PackageReference>
         <PackageReference Include="NSwag.AspNetCore" Version="14.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\FutFut.Identity\src\FutFut.Identity.Contracts\FutFut.Identity.Contracts.csproj" />
     </ItemGroup>
 
 </Project>

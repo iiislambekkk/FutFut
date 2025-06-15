@@ -6,8 +6,10 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FutFut.Identity.Service.Entities;
+using FutFut.Identity.Contracts;
 using Microsoft.AspNetCore.Authorization;
+using FutFut.Identity.Service.Entities;
+using MassTransit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -15,14 +17,9 @@ using Microsoft.AspNetCore.WebUtilities;
 
 namespace FutFut.Identity.Service.Areas.Identity.Pages.Account
 {
-    public class ConfirmEmailModel : PageModel
+    public class ConfirmEmailModel(UserManager<ApplicationUser> userManager, ILogger<ConfirmEmailModel> logger, IPublishEndpoint publishEndpoint) : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-
-        public ConfirmEmailModel(UserManager<ApplicationUser> userManager)
-        {
-            _userManager = userManager;
-        }
+        private readonly UserManager<ApplicationUser> _userManager = userManager;
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -46,6 +43,12 @@ namespace FutFut.Identity.Service.Areas.Identity.Pages.Account
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await _userManager.ConfirmEmailAsync(user, code);
             StatusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
+
+            if (result.Succeeded)
+            {
+                publishEndpoint.Publish<UserCreated>(new UserCreated(Guid.Parse(user.Id), user.Email));
+            }
+            
             return Page();
         }
     }

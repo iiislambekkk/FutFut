@@ -1,5 +1,8 @@
-﻿using FutFut.Identity.Service.Entities;
+﻿using FutFut.Identity.Contracts;
+using FutFut.Identity.Service.Entities;
 using FutFut.Identity.Service.Settings;
+using MassTransit;
+using MassTransit.Transports;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 
@@ -26,6 +29,7 @@ public class IdentitySeedHostedService : IHostedService
 
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        var publishEndpoint = scope.ServiceProvider.GetRequiredService<IPublishEndpoint>();
         
         await CreateRoleIfNotExistAsync(Roles.Admin, roleManager);
         await CreateRoleIfNotExistAsync(Roles.User, roleManager);
@@ -38,7 +42,8 @@ public class IdentitySeedHostedService : IHostedService
             {
                 UserName = _settings.AdminUserEmail,
                 Email = _settings.AdminUserEmail,
-                SecurityStamp = Guid.NewGuid().ToString()
+                SecurityStamp = Guid.NewGuid().ToString(),
+                EmailConfirmed = true
             };
 
             var isSuccess = await userManager.CreateAsync(adminUser, _settings.AdminUserPassword);
@@ -59,6 +64,8 @@ public class IdentitySeedHostedService : IHostedService
         
         Console.ForegroundColor = ConsoleColor.Magenta;
         Console.WriteLine("Seeding Finished!");
+        
+        await publishEndpoint.Publish<UserCreated>(new UserCreated(Guid.Parse(adminUser.Id), adminUser.Email), cancellationToken);
         
         Console.ResetColor();
     }

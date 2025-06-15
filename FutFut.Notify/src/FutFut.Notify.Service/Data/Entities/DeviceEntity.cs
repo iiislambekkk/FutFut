@@ -9,4 +9,6 @@ public class DeviceEntity : IEntity
     public Guid UserId { get; set; }
     public string Name { get; set; } = String.Empty;
     public string Token { get; set; } = String.Empty;
+    
+    public UserEntity? User { get; set; }
 }
