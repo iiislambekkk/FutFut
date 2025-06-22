@@ -10,12 +10,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("FutFut.Identity.Contracts")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("FutFut.Songs.Service")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+50b12482817dd485fb3fe6d15ef7576f5356c4d3")]
-[assembly: System.Reflection.AssemblyProductAttribute("FutFut.Identity.Contracts")]
-[assembly: System.Reflection.AssemblyTitleAttribute("FutFut.Identity.Contracts")]
+[assembly: System.Reflection.AssemblyProductAttribute("FutFut.Songs.Service")]
+[assembly: System.Reflection.AssemblyTitleAttribute("FutFut.Songs.Service")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Создано классом WriteCodeFragment MSBuild.

@@ -54,8 +54,32 @@
       - elasticsearch
     ports:
       - "5601:5601"
+  
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  ffmpeg-worker:
+    build:
+      context: ./ffmpeg-worker
+    container_name: ffmpeg-worker
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - R2_ACCESS_KEY=your_key
+      - R2_SECRET_KEY=your_secret
+      - R2_BUCKET=your_bucket
+      - R2_ENDPOINT=https://<account>.r2.cloudflarestorage.com
+    volumes:
+      - ./data:/app/data
     
 volumes:
   pgdata:
   rabbitmqdata:
   esdata:
+  redis_data:
