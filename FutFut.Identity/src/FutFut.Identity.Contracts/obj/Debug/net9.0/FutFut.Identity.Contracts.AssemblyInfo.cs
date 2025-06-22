@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FutFut.Identity.Contracts")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d7f54542f455d9c5471f400e36dc7e4e64178f4b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+71c0dbac8e1a022584ebfa4be3450622ed5b789f")]
 [assembly: System.Reflection.AssemblyProductAttribute("FutFut.Identity.Contracts")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FutFut.Identity.Contracts")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -10,7 +10,9 @@
         <PackageReference Include="Duende.IdentityServer" Version="7.2.4" />
         <PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="7.2.4" />
         <PackageReference Include="FutFut.Common" Version="1.0.4" />
+        <PackageReference Include="FutFut.Grpc.Protocols" Version="1.1.0" />
         <PackageReference Include="FutFut.Notify.Contracts" Version="1.0.0" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.71.0" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.5" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.5" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.4" />

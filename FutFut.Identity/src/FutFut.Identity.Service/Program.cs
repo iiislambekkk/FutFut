@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using FutFut.Identity.Service.Areas.Identity.Data;
 using FutFut.Identity.Service.Entities;
+using FutFut.Identity.Service.GrpcServices;
 using FutFut.Identity.Service.HostedServices;
 using FutFut.Identity.Service.Settings;
 
@@ -56,6 +57,8 @@ builder.Services.AddIdentityServer(opt =>
 builder.Services.AddLocalApiAuthentication();
 
 builder.Services.AddControllers();
+builder.Services.AddGrpc();
+
 builder.Services.AddHostedService<IdentitySeedHostedService>();
 
 builder.Services.AddOpenApi();
@@ -86,6 +89,7 @@ app.UseIdentityServer();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapGrpcService<UserGrpcService>();
 app.MapControllers();
 app.MapRazorPages();
 

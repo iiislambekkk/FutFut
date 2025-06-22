@@ -1,0 +1,13 @@
+C:\Users\merla\Desktop\FutFut\FutFut.Grpc.Protocols\bin\Release\net9.0\FutFut.Grpc.Protocols.deps.json
+C:\Users\merla\Desktop\FutFut\FutFut.Grpc.Protocols\bin\Release\net9.0\FutFut.Grpc.Protocols.dll
+C:\Users\merla\Desktop\FutFut\FutFut.Grpc.Protocols\bin\Release\net9.0\FutFut.Grpc.Protocols.pdb
+C:\Users\merla\Desktop\FutFut\FutFut.Grpc.Protocols\obj\Release\net9.0\FutFut.Grpc.Protocols.csproj.AssemblyReference.cache
+C:\Users\merla\Desktop\FutFut\FutFut.Grpc.Protocols\obj\Release\net9.0\FutFut.Grpc.Protocols.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\merla\Desktop\FutFut\FutFut.Grpc.Protocols\obj\Release\net9.0\FutFut.Grpc.Protocols.AssemblyInfoInputs.cache
+C:\Users\merla\Desktop\FutFut\FutFut.Grpc.Protocols\obj\Release\net9.0\FutFut.Grpc.Protocols.AssemblyInfo.cs
+C:\Users\merla\Desktop\FutFut\FutFut.Grpc.Protocols\obj\Release\net9.0\FutFut.Grpc.Protocols.csproj.CoreCompileInputs.cache
+C:\Users\merla\Desktop\FutFut\FutFut.Grpc.Protocols\obj\Release\net9.0\FutFut.Grpc.Protocols.sourcelink.json
+C:\Users\merla\Desktop\FutFut\FutFut.Grpc.Protocols\obj\Release\net9.0\FutFut.Grpc.Protocols.dll
+C:\Users\merla\Desktop\FutFut\FutFut.Grpc.Protocols\obj\Release\net9.0\refint\FutFut.Grpc.Protocols.dll
+C:\Users\merla\Desktop\FutFut\FutFut.Grpc.Protocols\obj\Release\net9.0\FutFut.Grpc.Protocols.pdb
+C:\Users\merla\Desktop\FutFut\FutFut.Grpc.Protocols\obj\Release\net9.0\ref\FutFut.Grpc.Protocols.dll

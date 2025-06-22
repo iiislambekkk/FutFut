@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>FutFut.Grpc.Protocols</id>
+    <version>1.0.0</version>
+    <authors>FutFut.Grpc.Protocols</authors>
+    <description>Package Description</description>
+    <repository type="git" commit="71c0dbac8e1a022584ebfa4be3450622ed5b789f" />
+    <dependencies>
+      <group targetFramework="net9.0">
+        <dependency id="Google.Protobuf" version="3.31.1" exclude="Build,Analyzers" />
+        <dependency id="Grpc.Net.Client" version="2.71.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="C:\Users\merla\Desktop\FutFut\FutFut.Grpc.Protocols\bin\Release\net9.0\FutFut.Grpc.Protocols.dll" target="lib\net9.0\FutFut.Grpc.Protocols.dll" />
+  </files>
+</package>
